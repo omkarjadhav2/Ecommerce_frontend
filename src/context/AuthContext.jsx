@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (err) {
       console.error("Login failed", err.response.data);
+      alert(err.response.data.detail)
       return false;
     }
   };
@@ -25,8 +26,36 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("authTokens");
   };
 
+  const registerUser = async (form) => {
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/api/auth/register/customer/", form);
+    if (response.status === 201) {
+      return true;  
+    }
+    return false; 
+  } catch (err) {
+    console.error(err.response?.data.username);
+    alert(err.response?.data.username)
+    return false; 
+  }
+};
+
+const userDetails = async (token) => {
+  try {
+    const response = await axios.get("http://127.0.0.1:8000/api/profile/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching profile:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
   return (
-    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser , registerUser , userDetails}}>
       {children}
     </AuthContext.Provider>
   );

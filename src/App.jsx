@@ -1,6 +1,5 @@
 import React from 'react';
 import CustomerRegister from "./pages/CustomerRegister";
-import SellerRegister from "./pages/SellerRegister";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Collection from "./pages/Collection";
@@ -29,14 +28,12 @@ const App = () => {
       <Navbar />
       <nav>
         <Link to="/register/customer">Customer Register</Link>
-        <Link to="/register/seller">Seller Register</Link>
         <Link to="/login">Login</Link>
         <Link to="/dashboard">Dashboard</Link>
       </nav>
       <SearchBar></SearchBar>
       <Routes>
         <Route path="/register/customer" element={<CustomerRegister />} />
-        <Route path="/register/seller" element={<SellerRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path='/' element ={<Home />}/>

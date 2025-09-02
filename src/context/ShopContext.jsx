@@ -11,7 +11,7 @@ const ShopContextProvider = (props) => {
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [cartItems, setCartItems] = useState({});
-  const [orders, setOrders] = useState([]); // Add orders state
+  const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
 
   const addToCart = (itemId, size) => {
@@ -107,8 +107,8 @@ const ShopContextProvider = (props) => {
     updateQuantity,
     getCartAmount,
     navigate,
-    orders, // Add orders to context value
-    placeOrder, // Add placeOrder function
+    orders, 
+    placeOrder, 
   };
 
   return (

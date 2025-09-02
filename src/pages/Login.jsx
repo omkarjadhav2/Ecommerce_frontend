@@ -12,9 +12,9 @@ const Login = () => {
     e.preventDefault();
     const success = await loginUser(username, password);
     if (success) {
-      navigate("/dashboard");  // ✅ redirect after login
+      navigate("/dashboard"); 
     } else {
-      alert("Invalid credentials");
+      return false
     }
   };
 
