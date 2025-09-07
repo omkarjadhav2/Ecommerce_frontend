@@ -18,6 +18,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from "./context/AuthContext";
 import { Link } from "react-router-dom";
+import ImageUpload from './pages/upload';
 
 
 const App = () => {
@@ -33,6 +34,8 @@ const App = () => {
       </nav>
       <SearchBar></SearchBar>
       <Routes>
+       
+        <Route path="/upload" element={<ImageUpload />} />
         <Route path="/register/customer" element={<CustomerRegister />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />

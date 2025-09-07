@@ -4,12 +4,13 @@ import axios from "axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const baseURL = "http://127.0.0.1:8000";
   const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
   const [user, setUser] = useState(null);
 
   const loginUser = async (username, password) => {
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/auth/login/", { username, password });
+      const res = await axios.post( `${baseURL}/api/auth/login/`, { username, password });
       setAuthTokens(res.data);
       localStorage.setItem("authTokens", JSON.stringify(res.data));
       return true;
@@ -28,7 +29,7 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async (form) => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/api/auth/register/customer/", form);
+    const response = await axios.post(`${baseURL}/api/auth/register/customer/`, form);
     if (response.status === 201) {
       return true;  
     }
@@ -42,7 +43,7 @@ export const AuthProvider = ({ children }) => {
 
 const userDetails = async (token) => {
   try {
-    const response = await axios.get("http://127.0.0.1:8000/api/profile/", {
+    const response = await axios.get(`${baseURL}/api/profile/`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -1,11 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState , useEffect } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink  } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
 const [visible , setVisible ] = useState(false);
 const {setShowSearch , getCartCount} = useContext(ShopContext);
+const { userDetails, authTokens, logoutUser } = useContext(AuthContext);
+const [profile, setProfile] = useState(null);
+
+useEffect(() => {
+    if (authTokens) {
+      userDetails(authTokens.access)
+        .then((data) => {
+          console.log("User profile from API:", data);
+          setProfile(data);
+        })
+        .catch(() => logoutUser());
+        
+    }
+   
+    
+  }, [authTokens]);
 
   return (
     <div className="flex item-center justify-between py-5 font-medium ">
@@ -27,6 +44,7 @@ const {setShowSearch , getCartCount} = useContext(ShopContext);
           <p>CONTACT </p>
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
+        {profile && <p>Hello, {profile.username}</p>}
       </ul>
       <div className="flex items-center gap-6 ">
         <img
