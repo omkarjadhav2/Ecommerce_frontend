@@ -19,11 +19,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from "./context/AuthContext";
 import { Link } from "react-router-dom";
 import ImageUpload from './pages/upload';
+import { ProductProvider } from './context/ProductContext';
 
 
 const App = () => {
   return (
     <AuthProvider>
+      <ProductProvider>
     <div className='px-4 sm:px-[5vw] md:px-[7vw] 1g:px-[9vw]'>
       <ToastContainer></ToastContainer>
       <Navbar />
@@ -52,6 +54,7 @@ const App = () => {
       <Footer></Footer>
 
     </div>
+    </ProductProvider>
     </AuthProvider>
   )
 }
