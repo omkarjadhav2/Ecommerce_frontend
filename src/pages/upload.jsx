@@ -25,6 +25,7 @@ const ImageUpload = () => {
     const stock = formData.get("stock");
     const description = formData.get("description");
     const bestseller = formData.get("bestseller");
+    const sizes = formData.getAll("sizes").map((s) => ({ value: parseInt(s) }));
 
     const uploadedUrls = [];
 
@@ -44,6 +45,7 @@ const ImageUpload = () => {
       const fileRes = await res.json();
       uploadedUrls.push(fileRes.secure_url);
     }
+
     const productData = {
       name,
       brand,
@@ -56,14 +58,15 @@ const ImageUpload = () => {
       stock,
       bestseller,
       description,
+      sizes,
       images: uploadedUrls.map((url) => ({ url })),
     };
 
     const success = await uploadProduct(productData);
     if (success) {
       alert("product uploaded");
-      e.target.reset(); 
-      setUrls([]);  
+      e.target.reset();
+      setUrls([]);
     }
 
     setUrls(uploadedUrls);
@@ -79,7 +82,6 @@ const ImageUpload = () => {
         </h2>
 
         <form onSubmit={handleFileUpload} className="space-y-4">
-          
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
               Product Images
@@ -92,7 +94,6 @@ const ImageUpload = () => {
             />
           </div>
 
-          
           <div>
             <label
               htmlFor="name"
@@ -108,7 +109,6 @@ const ImageUpload = () => {
             />
           </div>
 
-          
           <div>
             <label
               htmlFor="brand"
@@ -172,7 +172,7 @@ const ImageUpload = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
             />
           </div>
-          
+
           <div>
             <label
               htmlFor="color"
@@ -187,7 +187,7 @@ const ImageUpload = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
             />
           </div>
-          
+
           <div>
             <label
               htmlFor="material"
@@ -203,7 +203,6 @@ const ImageUpload = () => {
             />
           </div>
 
-          
           <div>
             <label
               htmlFor="category"
@@ -218,7 +217,7 @@ const ImageUpload = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
             />
           </div>
-          
+
           <div>
             <label
               htmlFor="subcategory"
@@ -233,8 +232,27 @@ const ImageUpload = () => {
               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
             />
           </div>
-          
-          <div className="flex items-center">
+
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-1">
+              Sizes
+            </label>
+            <div className="grid grid-cols-4 gap-2">
+              {[5, 6, 7, 8, 9, 10, 11, 12].map((size) => (
+                <label key={size} className="flex items-center space-x-1">
+                  <input
+                    type="checkbox"
+                    name="sizes"
+                    value={size}
+                    className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <span className="text-sm">{size}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center border-1 p-3">
             <input
               type="checkbox"
               name="bestseller"
@@ -243,13 +261,12 @@ const ImageUpload = () => {
             />
             <label
               htmlFor="bestseller"
-              className="ml-2 block text-sm text-gray-700"
+              className="ml-2 block text-sm text-blue-700"
             >
               Bestseller
             </label>
           </div>
 
-          
           <div>
             <label
               htmlFor="description"
@@ -257,12 +274,15 @@ const ImageUpload = () => {
             >
               Description
             </label>
-            <textarea id="description" name="description" rows="10" cols="50" 
-             className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"></textarea>
+            <textarea
+              id="description"
+              name="description"
+              rows="10"
+              cols="50"
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
+            ></textarea>
           </div>
-          
 
-          
           <button
             type="submit"
             className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition"
@@ -271,7 +291,6 @@ const ImageUpload = () => {
           </button>
         </form>
 
-       
         <div className="mt-6 grid grid-cols-3 gap-3">
           {urls.map((url, idx) => (
             <img

@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { products } from "../assets/assets";
 import { toast } from "react-toastify";
 
 export const ShopContext = createContext();
@@ -13,6 +12,23 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+
+
+  useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/products/");
+      if (!res.ok) throw new Error("Failed to fetch products");
+      const data = await res.json();
+      setProducts(data);
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    }
+  };
+  fetchProducts();
+}, []);
+
 
   const addToCart = (itemId, size) => {
     if (!size) {
