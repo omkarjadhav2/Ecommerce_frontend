@@ -7,19 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const { setShowSearch, getCartCount } = useContext(ShopContext);
-  const { userDetails, authTokens, logoutUser } = useContext(AuthContext);
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    if (authTokens) {
-      userDetails(authTokens.access)
-        .then((data) => {
-          console.log("User profile from API:", data);
-          setProfile(data);
-        })
-        .catch(() => logoutUser());
-    }
-  }, [authTokens]);
+  const { logoutUser, user } = useContext(AuthContext);
 
   return (
     <div className="flex item-center justify-between py-5 font-medium ">
@@ -44,9 +32,9 @@ const Navbar = () => {
           <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
       </ul>
-      {profile ? (
+      {user ? (
         <div className="hidden sm:flex gap-5 text-lg text-gray-700 items-top my-5">
-          <p>Hello, {profile.username}</p>
+          <p>Hello, {user.username}</p>
         </div>
       ) : (
         <div className="hidden sm:flex gap-5 text-sm text-gray-700  items-top my-5">

@@ -10,13 +10,34 @@ export const AuthProvider = ({ children }) => {
   const baseURL = "http://127.0.0.1:8000";
   const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
   const [user, setUser] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+  const fetchUser = async () => {
+    if (authTokens) {
+      try {
+        const profile = await userDetails(authTokens.access);
+        setUser(profile);
+      } catch (err) {
+        console.error("Failed to fetch user on load", err);
+        logoutUser();
+      }
+    }
+  };
+
+  fetchUser();
+}, [authTokens]);
+
+
+ 
   const loginUser = async (username, password) => {
     try {
       const res = await axios.post( `${baseURL}/api/auth/login/`, { username, password });
       setAuthTokens(res.data);
       localStorage.setItem("authTokens", JSON.stringify(res.data));
+      const profile = await userDetails(res.data.access);
+      setUser(profile);
       return true;
     } catch (err) {
       console.error("Login failed", err.response.data);
@@ -62,7 +83,7 @@ const userDetails = async (token) => {
 };
 
   return (
-    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser , registerUser , userDetails}}>
+    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser , registerUser , userDetails , selectedAddress, setSelectedAddress}}>
       {children}
     </AuthContext.Provider>
   );

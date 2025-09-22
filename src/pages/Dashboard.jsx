@@ -3,22 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 
 
 const Dashboard = () => {
-  const { userDetails, authTokens, logoutUser } = useContext(AuthContext);
-  const [profile, setProfile] = useState(null);
-
-  useEffect(() => {
-    if (authTokens) {
-      userDetails(authTokens.access)
-        .then((data) => {
-          console.log("User profile from API:", data);
-          setProfile(data);
-        })
-        .catch(() => logoutUser());
-        
-    }
-   
-    
-  }, [authTokens]);
+  const { userDetails, authTokens, logoutUser , user } = useContext(AuthContext);
 
   return (
     <div>
@@ -26,7 +11,7 @@ const Dashboard = () => {
       {authTokens ? (
         <>
           <p>Welcome! You are logged in.</p>
-          {profile && <p>Hello, {profile.username}</p>}
+          {user && <p>Hello, {user.username}</p>}
           <button onClick={logoutUser}>Logout</button>
         </>
       ) : (

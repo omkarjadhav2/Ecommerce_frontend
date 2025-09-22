@@ -8,7 +8,7 @@ import Contact from "./pages/Contact";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
-import PlaceOrder from "./pages/PlaceOrder";
+import SelectAddress from "./pages/SelectAddress";
 import Orders from "./pages/Orders";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -20,6 +20,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { Link } from "react-router-dom";
 import ImageUpload from "./pages/upload";
 import { ProductProvider } from "./context/ProductContext";
+import Profile from "./pages/profile";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
           </nav>
           <SearchBar></SearchBar>
           <Routes>
+            <Route path="/profile" element={<Profile />} />
             <Route path="/upload" element={<ImageUpload />} />
             <Route path="/register/customer" element={<CustomerRegister />} />
             <Route path="/login" element={<Login />} />
@@ -52,7 +54,7 @@ const App = () => {
             <Route path="/product/:id" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/place-order" element={<PlaceOrder />} />
+            <Route path="/address" element={<SelectAddress />} />
             <Route path="/orders" element={<Orders />} />
           </Routes>
           <Footer></Footer>
