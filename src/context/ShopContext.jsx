@@ -49,6 +49,7 @@ const ShopContextProvider = (props) => {
       cartData[itemId] = {};
       cartData[itemId][size] = 1;
     }
+    toast.success("Product Added to Cart")
     setCartItems(cartData);
   };
 
@@ -68,16 +69,28 @@ const ShopContextProvider = (props) => {
     return totalCount;
   };
 
-  const updateQuantity = async (itemId, size, quantity) => {
-    let cartData = structuredClone(cartItems);
-    cartData[itemId][size] = quantity;
-    setCartItems(cartData);
-  };
+  const updateQuantity = (itemId, size, quantity) => {
+  let cartData = structuredClone(cartItems);
+
+  // If product not in cart yet, create entry
+  if (!cartData[itemId]) {
+    cartData[itemId] = {};
+  }
+
+  // If size doesn’t exist, create it
+  if (!cartData[itemId][size]) {
+    cartData[itemId][size] = 0;
+  }
+
+  cartData[itemId][size] = quantity;
+  setCartItems(cartData);
+};
+
 
   const getCartAmount = () => {
     let totalAmount = 0;
     for (const items in cartItems) {
-      let itemInfo = products.find((product) => product._id === items);
+      let itemInfo = products.find((product) => product.id == items);
       for (const item in cartItems[items]) {
         try {
           if (cartItems[items][item] > 0) {
@@ -92,24 +105,27 @@ const ShopContextProvider = (props) => {
   };
 
   const placeOrder = () => {
-    const orderDetails = [];
-    for (const itemId in cartItems) {
-      for (const size in cartItems[itemId]) {
-        if (cartItems[itemId][size] > 0) {
-          const product = products.find((p) => p._id === itemId);
+  const orderDetails = [];
+  for (const itemId in cartItems) {
+    for (const size in cartItems[itemId]) {
+      if (cartItems[itemId][size] > 0) {
+        const product = products.find((p) => p.id === parseInt(itemId));
+        if (product) {
           orderDetails.push({
             ...product,
             size,
             quantity: cartItems[itemId][size],
-            date: new Date().toLocaleDateString(), 
+            date: new Date().toLocaleDateString(),
           });
         }
       }
     }
-    setOrders((prevOrders) => [...prevOrders, ...orderDetails]); 
-    setCartItems({}); 
-    navigate("/orders"); 
-  };
+  }
+  setOrders((prevOrders) => [...prevOrders, ...orderDetails]);
+  setCartItems({});
+  navigate("/orders");
+};
+
 
   const value = {
     products,

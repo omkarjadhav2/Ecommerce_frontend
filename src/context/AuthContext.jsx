@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 export const AuthContext = createContext();
 
@@ -7,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const baseURL = "http://127.0.0.1:8000";
   const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
     try {
@@ -25,6 +29,8 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
+    navigate("/");
+    window.location.reload();
   };
 
   const registerUser = async (form) => {
