@@ -82,8 +82,30 @@ const userDetails = async (token) => {
   }
 };
 
+const saveAddress = async (form, authTokens) => {
+  try {
+    const response = await axios.post(
+      `${baseURL}/api/address/`,
+      form,
+      {
+        headers: {
+          Authorization: `Bearer ${authTokens.access}`, 
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    window.location.reload();
+    return response.status === 201;
+  } catch (err) {
+    console.error(err.response?.data);
+    alert(err.response?.data?.detail || "Failed to save address");
+    return false;
+  }
+};
+
+
   return (
-    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser , registerUser , userDetails , selectedAddress, setSelectedAddress}}>
+    <AuthContext.Provider value={{ user, authTokens, loginUser, logoutUser , registerUser , userDetails , selectedAddress, setSelectedAddress , saveAddress}}>
       {children}
     </AuthContext.Provider>
   );

@@ -21,6 +21,7 @@ import { Link } from "react-router-dom";
 import ImageUpload from "./pages/upload";
 import { ProductProvider } from "./context/ProductContext";
 import Profile from "./pages/profile";
+import Payment from "./pages/payment";
 
 const App = () => {
   return (
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/address" element={<SelectAddress />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/payment" element={<Payment />} />
           </Routes>
           <Footer></Footer>
         </div>

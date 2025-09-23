@@ -4,9 +4,12 @@ import Title from "../components/Title";
 import { AuthContext } from "../context/AuthContext";
 
 const SelectAddress = () => {
-  const { user, selectedAddress, setSelectedAddress } = useContext(AuthContext);
+  const { user, selectedAddress, setSelectedAddress , saveAddress ,authTokens} = useContext(AuthContext);
   const navigate = useNavigate();
   const [showFields, setShowFields] = useState(false);
+  const [form, setForm] = useState({ full_name: "", street_address: "", city: "", state: "", postal_code: "", country: "" ,phone_number: "" });
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -19,6 +22,8 @@ const SelectAddress = () => {
     // persist selection so it survives a page refresh
     if (selectedAddress) {
       localStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
+      console.log(selectedAddress);
+      
     }
   }, [selectedAddress]);
 
@@ -30,13 +35,20 @@ const SelectAddress = () => {
     // navigate to payment page (change route if needed)
     navigate("/payment");
   };
-  const handleFormSubmission =(e)=>{
-    
-    e.preventDefault();
-    // collect form data here and send to backend
-    console.log("Form submitted");
-  
+
+  const handleFormSubmission = async (e) => {
+  e.preventDefault();
+  try {
+    const success = await saveAddress(form, authTokens);
+    if (success) {
+      alert("Address Saved!");
+      navigate("/");
+    }
+  } catch (err) {
+    console.error(err);
   }
+};
+
 
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
@@ -109,6 +121,12 @@ const SelectAddress = () => {
           ) : (
             <div className="mt-4">
               <h1>No addresses found. Please add one.</h1>
+               <button
+                  className="text-green-600 border-1 p-1"
+                  onClick={handleAddressButton}
+                >
+                  Add New Address
+                </button>
             </div>
           )}
         </div>
@@ -117,11 +135,12 @@ const SelectAddress = () => {
       {/* LEFT: Add / Edit Address Form (kept as-is) */}
       {showFields ? (
         <form
+        onSubmit={handleFormSubmission}
           className="flex flex-col gap-4 w-full sm:max-w-[480px]"
           
         >
           <div className="text-xl sm:text-2xl my-3">
-            <Title text1={"DELIVERY"} text2={"INFORMATION"} />
+            <Title text1={"ADD"} text2={"ADDRESS"} />
           </div>
 
           <div>
@@ -129,32 +148,19 @@ const SelectAddress = () => {
               <input
                 className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
                 type="text"
-                placeholder="First name"
-                name="first_name"
+                placeholder="Full name"
+                name="full_name"
                 required
-              />
-              <input
-                className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
-                type="text"
-                placeholder="Last name"
-                name="last_name"
-                required
+                onChange={handleChange}
               />
             </div>
-
-            <input
-              className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
-              type="email"
-              placeholder="Email address"
-              name="email"
-              required
-            />
             <input
               className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
               type="text"
               placeholder="Street"
               name="street_address"
               required
+              onChange={handleChange}
             />
 
             <div className="flex gap-3">
@@ -164,6 +170,7 @@ const SelectAddress = () => {
                 placeholder="City"
                 name="city"
                 required
+                onChange={handleChange}
               />
               <input
                 className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
@@ -171,6 +178,7 @@ const SelectAddress = () => {
                 placeholder="State"
                 name="state"
                 required
+                onChange={handleChange}
               />
             </div>
 
@@ -181,6 +189,7 @@ const SelectAddress = () => {
                 placeholder="ZipCode"
                 name="postal_code"
                 required
+                onChange={handleChange}
               />
               <input
                 className="border border-gray-300 rounded py-1.5 px-3.5 w-full my-2"
@@ -188,6 +197,7 @@ const SelectAddress = () => {
                 placeholder="Country"
                 name="country"
                 required
+                onChange={handleChange}
               />
             </div>
 
@@ -197,6 +207,7 @@ const SelectAddress = () => {
               placeholder="Phone"
               name="phone_number"
               required
+              onChange={handleChange}
             />
           </div>
 
