@@ -6,8 +6,12 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const { setShowSearch, getCartCount } = useContext(ShopContext);
-  const { logoutUser, user } = useContext(AuthContext);
+  const { setShowSearch, getCartItems ,cartCount} = useContext(ShopContext);
+  const { logoutUser, user , authTokens } = useContext(AuthContext);
+
+useEffect(()=>{
+  getCartItems(authTokens)
+},[cartCount])
 
   return (
     <div className="flex item-center justify-between py-5 font-medium ">
@@ -89,7 +93,7 @@ const Navbar = () => {
         <Link to="/cart" className="relative">
           <img src={assets.cart_icon} alt="cart_icon" className="w-5 min-w-5" />
           <p className="absolute right-[-5px] bottom-[-5px] w-4 text-center leading-4 bg-black text-white aspect-square rounded-full text-[10px]">
-            {getCartCount()}
+            {cartCount}
           </p>
         </Link>
         <img

@@ -3,10 +3,13 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { assets } from "../assets/assets";
 import RelatedProducts from "../components/RelatedProducts";
+import {AuthContext } from "../context/AuthContext";
+
 
 const Product = () => {
   const { id } = useParams();
   const { products, currency, addToCart } = useContext(ShopContext);
+  const { authTokens } = useContext(AuthContext);
   const [productData, setProductData] = useState(false);
   const [image, setImage] = useState("");
   const [size, setSize] = useState("");
@@ -21,7 +24,8 @@ const Product = () => {
 
   useEffect(() => {
     fetchProductData();
-  }, [id]);
+    
+  }, [id , products]);
   return productData ? (
     <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
       <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
@@ -79,7 +83,7 @@ const Product = () => {
             </div>
           </div>
           <button
-            onClick={() => addToCart(productData.id, size)}
+            onClick={() => addToCart(productData.id, size , authTokens)}
             className="bg-black text-white px-8 py-3 text-sm active:bg-gray-700"
           >
             ADD To CART

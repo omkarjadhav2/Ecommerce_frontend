@@ -4,27 +4,48 @@ import Title from "../components/Title";
 import { assets } from "../assets/assets";
 import CartTotal from "../components/CartTotal";
 import { toast } from "react-toastify";
+import { AuthContext } from "../context/AuthContext";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } =
-    useContext(ShopContext);
-  const [cartData, setCartData] = useState([]);
+  const {
+    products,
+    currency,
+    cartItems,
+    updateQuantity,
+    navigate,
+    getCartItems,
+    removeFromCart,
+    cartData
+  } = useContext(ShopContext);
+  // const [cartData, setCartData] = useState([]);
+  const { authTokens } = useContext(AuthContext);
 
-  useEffect(() => {
-    const tempData = [];
-    for (const items in cartItems) {
-      for (const item in cartItems[items]) {
-        if (cartItems[items][item] > 0) {
-          tempData.push({
-            id: items,
-            size: item,
-            quantity: cartItems[items][item],
-          });
-        }
-      }
-    }
-    setCartData(tempData);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   const tempData = [];
+  //   for (const items in cartItems) {
+  //     for (const item in cartItems[items]) {
+  //       if (cartItems[items][item] > 0) {
+  //         tempData.push({
+  //           id: items,
+  //           size: item,
+  //           quantity: cartItems[items][item],
+  //         });
+  //       }
+  //     }
+  //   }
+  //   setCartData(tempData);
+  // }, [cartItems]);
+
+  // useEffect(() => {
+  //   const fetchCart = async () => {
+  //     const response = await getCartItems(authTokens);
+  //     if (response) {
+  //       setCartData(response);
+  //       console.log("mydata", response);
+  //     }
+  //   };
+  //   fetchCart();
+  // }, [authTokens]);
 
   return (
     <div className="border-t pt-14">
@@ -33,7 +54,7 @@ const Cart = () => {
       </div>
       <div>
         {cartData.map((item, index) => {
-          const productData = products.find((product) => product.id == item.id);
+          const productData = item.product; // directly use the product field
 
           return (
             <div
@@ -48,24 +69,30 @@ const Cart = () => {
                 />
                 <div>
                   <p className="text-xs sm:text-lg font-medium">
-                    {productData.name}
+                    {productData?.name}
                   </p>
                   <div className="flex items-center gap-5 mt-2">
                     <p>
                       {currency}
-                      {productData.newprice}
+                      {productData?.newprice}
                     </p>
                     <p className="px-2 sm:px-3 sm:py-1 border bg-slate-50">
-                      {item.size}
+                      Size : {item.size}
                     </p>
                   </div>
                 </div>
               </div>
+
               <input
                 onChange={(e) =>
                   e.target.value === "" || e.target.value === "0"
                     ? null
-                    : updateQuantity(item.id, item.size, Number(e.target.value))
+                    : updateQuantity(
+                        item.product.id,
+                        item.size,
+                        Number(e.target.value),
+                        authTokens
+                      )
                 }
                 className="border max-w-10 sm:max-w-20 px-1 sm:px-2 py-1"
                 type="number"
@@ -75,8 +102,8 @@ const Cart = () => {
 
               <img
                 onClick={() => {
-                  updateQuantity(item.id, item.size, 0)
-                  toast.success("Item removed")
+                  removeFromCart(item.product.id, item.size, authTokens );
+                  
                 }}
                 className="w-4 mr-4 sm:w-5 cursor-pointer"
                 src={assets.bin_icon}

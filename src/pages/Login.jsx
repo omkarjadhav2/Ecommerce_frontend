@@ -12,7 +12,10 @@ const Login = () => {
     e.preventDefault();
     const success = await loginUser(username, password);
     if (success) {
-      navigate("/dashboard"); 
+      navigate("/dashboard");
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000); 
     } else {
       return false
     }
