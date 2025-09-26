@@ -4,11 +4,11 @@ import {AuthContext } from "../context/AuthContext";
 
 const Testcart = () => {
 
-      const { getCartItems } = useContext(ShopContext);
+      const { getOrderItems } = useContext(ShopContext);
       const { authTokens } = useContext(AuthContext);
     
  useEffect(()=>{
-    getCartItems(authTokens)
+    getOrderItems(authTokens)
  },[])     
   return (
     <div>

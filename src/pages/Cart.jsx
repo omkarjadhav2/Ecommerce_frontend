@@ -36,16 +36,10 @@ const Cart = () => {
   //   setCartData(tempData);
   // }, [cartItems]);
 
-  // useEffect(() => {
-  //   const fetchCart = async () => {
-  //     const response = await getCartItems(authTokens);
-  //     if (response) {
-  //       setCartData(response);
-  //       console.log("mydata", response);
-  //     }
-  //   };
-  //   fetchCart();
-  // }, [authTokens]);
+  useEffect(() => {
+   console.log("here",cartData);
+   
+  }, []);
 
   return (
     <div className="border-t pt-14">

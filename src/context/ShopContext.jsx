@@ -74,115 +74,137 @@ const ShopContextProvider = (props) => {
           "Content-Type": "application/json",
         },
       });
-      const length = response.data.length;
-      console.log(length);
-      setCartCount(length);
-      setCartData(response.data)
 
-      console.log(response.data);
+      // ✅ response.data is an object (cart), so take items
+      const items = response.data.items || [];
 
-      return response.data;
+      setCartCount(items.length);
+      setCartData(items);
+
+      console.log("get wala", items);
+
+      return items;
     } catch (error) {
       console.error(error.response?.data);
     }
   };
 
-  
-
   const updateQuantity = async (itemId, size, quantity, authTokens) => {
-  try {
-    const response = await axios.patch(
-      `${baseURL}/api/cart/`,
-      {
-        product_id: itemId,
-        size: size,
-        quantity: quantity,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${authTokens.access}`,
-          "Content-Type": "application/json",
+    try {
+      const response = await axios.patch(
+        `${baseURL}/api/cart/`,
+        {
+          product_id: itemId,
+          size: size,
+          quantity: quantity,
         },
-      }
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${authTokens.access}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    toast.success("Cart updated");
-    await getCartItems(authTokens);
-    return response.data;
-  } catch (error) {
-    console.error(error.response?.data);
-    alert(error.response?.data?.detail || "Failed to update cartt");
-    return false;
-  }
-};
-
-
-const getCartAmount = () => {
-  console.log("myarray",cartData);
-  
-  if (!Array.isArray(cartData)) return 0;
-
-  let totalAmount = 0;
-  cartData.forEach((item) => {
-    if (item?.product?.newprice && item?.quantity) {
-      totalAmount += parseFloat(item.product.newprice) * item.quantity;
+      toast.success("Cart updated");
+      await getCartItems(authTokens);
+      return response.data;
+    } catch (error) {
+      console.error(error.response?.data);
+      alert(error.response?.data?.detail || "Failed to update cartt");
+      return false;
     }
-  });
-  return totalAmount;
-};
+  };
 
+  const getCartAmount = () => {
+    console.log("myarray", cartData);
 
+    if (!Array.isArray(cartData)) return 0;
 
- const placeOrder = async (authTokens, addressId, paymentMethod) => {
-  try {
-    const response = await axios.post(
-      `${baseURL}/api/orders/`,
-      {
-        address_id: addressId,
-        payment_method: paymentMethod,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${authTokens.access}`,
-          "Content-Type": "application/json",
-        },
+    let totalAmount = 0;
+    cartData.forEach((item) => {
+      if (item?.product?.newprice && item?.quantity) {
+        totalAmount += parseFloat(item.product.newprice) * item.quantity;
       }
-    );
+    });
+    return totalAmount;
+  };
 
-    toast.success("Order placed successfully");
-    navigate("/orders");
-    return response.data;
-  } catch (error) {
-    console.error(error.response?.data);
-    alert(error.response?.data?.detail || "Failed to place order");
-    return false;
-  }
-};
+  const placeOrder = async (authTokens, addressId, paymentMethod) => {
+    try {
+      const response = await axios.post(
+        `${baseURL}/api/orders/`,
+        {
+          address_id: addressId,
+          payment_method: paymentMethod,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authTokens.access}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
+      toast.success("Order placed successfully");
+      navigate("/orders");
+      return response.data;
+    } catch (error) {
+      console.error(error.response?.data);
+      alert(error.response?.data?.detail || "Failed to place order");
+      return false;
+    }
+  };
 
   const removeFromCart = async (itemId, size, authTokens) => {
-  try {
-    const response = await axios.delete(`${baseURL}/api/cart/`, {
-      headers: {
-        Authorization: `Bearer ${authTokens.access}`,
-        "Content-Type": "application/json",
-      },
-      data: {
-        product_id: itemId,
-        size: size,
-      },
-    });
+    try {
+      const response = await axios.delete(`${baseURL}/api/cart/`, {
+        headers: {
+          Authorization: `Bearer ${authTokens.access}`,
+          "Content-Type": "application/json",
+        },
+        data: {
+          product_id: itemId,
+          size: size,
+        },
+      });
 
-    toast.success("Item removed");
-    await getCartItems(authTokens);
+      toast.success("Item removed");
+      await getCartItems(authTokens);
 
-    return response.status === 200;
-  } catch (error) {
-    console.error(error.response?.data);
-    alert(error.response?.data?.detail || "Failed to remove from cart");
-    return false;
-  }
-};
+      return response.status === 200;
+    } catch (error) {
+      console.error(error.response?.data);
+      alert(error.response?.data?.detail || "Failed to remove from cart");
+      return false;
+    }
+  };
+
+  const getOrderItems = async (authTokens) => {
+    try {
+      const response = await axios.get(`${baseURL}/api/orders/`, {
+        headers: {
+          Authorization: `Bearer ${authTokens.access}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      // response.data is an array of orders
+      const orders = response.data;
+
+      // flatten all items from all orders
+      const items = orders.flatMap((order) => order.items);
+
+      setOrders(orders);
+
+      console.log("all orders", orders);
+      console.log("all items", items);
+
+      return items;
+    } catch (error) {
+      console.error(error.response?.data);
+    }
+  };
 
   const value = {
     products,
@@ -203,6 +225,7 @@ const getCartAmount = () => {
     cartCount,
     removeFromCart,
     cartData,
+    getOrderItems,
   };
 
   return (
