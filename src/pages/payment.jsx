@@ -7,7 +7,6 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import CartTotal from "../components/CartTotal";
 
-
 const loadRazorpayScript = () =>
   new Promise((resolve) => {
     const existing = document.getElementById("razorpay-js");
@@ -22,7 +21,7 @@ const loadRazorpayScript = () =>
 
 const Payment = () => {
   const [method, setMethod] = useState("cod");
-  const { cartData  } = useContext(ShopContext); // not required for payment but available
+  const { cartData } = useContext(ShopContext); // not required for payment but available
   const { authTokens, selectedAddress } = useContext(AuthContext);
   const baseURL = "http://127.0.0.1:8000";
 
@@ -35,7 +34,7 @@ const Payment = () => {
     if (method === "cod") {
       // Call your backend order endpoint for cash-on-delivery (if you have one)
       // or reuse placeOrder in ShopContext. For now you already have placeOrder in context.
-      alert("Cash on delivery is currently unavailable at your address");
+      alert("COD flow - implement as needed");
       return;
     }
 
@@ -91,8 +90,7 @@ const Payment = () => {
 
               // success
               alert("Payment successful! Order placed.");
-              // navigate to orders page or reload cart 
-
+              // navigate to orders page or reload cart etc
               window.location.href = "/orders";
             } catch (err) {
               console.error(err.response?.data || err);
@@ -115,7 +113,7 @@ const Payment = () => {
     }
   };
 
-  return (
+ return (
   <div className="mt-8">
     <div className="bg-white shadow-lg rounded-2xl p-6 min-w-80">
       {/* Section Title */}

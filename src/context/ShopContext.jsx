@@ -81,7 +81,8 @@ const ShopContextProvider = (props) => {
       setCartCount(items.length);
       setCartData(items);
 
-      console.log("get wala", items);
+      console.log("get wala", response.data);
+      console.log("get items", items);
 
       return items;
     } catch (error) {
@@ -181,30 +182,30 @@ const ShopContextProvider = (props) => {
   };
 
   const getOrderItems = async (authTokens) => {
-    try {
-      const response = await axios.get(`${baseURL}/api/orders/`, {
-        headers: {
-          Authorization: `Bearer ${authTokens.access}`,
-          "Content-Type": "application/json",
-        },
-      });
+  try {
+    const response = await axios.get(`${baseURL}/api/orders/`, {
+      headers: {
+        Authorization: `Bearer ${authTokens.access}`,
+        "Content-Type": "application/json",
+      },
+    });
 
-      // response.data is an array of orders
-      const orders = response.data;
+    // response.data is an array of orders
+    const orders = response.data;
 
-      // flatten all items from all orders
-      const items = orders.flatMap((order) => order.items);
+    // flatten all items from all orders
+    const items = orders.flatMap(order => order.items);
 
-      setOrders(orders);
+    setOrders(orders);
 
-      console.log("all orders", orders);
-      console.log("all items", items);
+    console.log("all orders", orders);
+    console.log("all items", items);
 
-      return items;
-    } catch (error) {
-      console.error(error.response?.data);
-    }
-  };
+    return items;
+  } catch (error) {
+    console.error(error.response?.data);
+  }
+};
 
   const value = {
     products,
