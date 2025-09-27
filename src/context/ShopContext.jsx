@@ -16,7 +16,7 @@ const ShopContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = import.meta.env.VITE_API_BASE;
 
   useEffect(() => {
     const fetchProducts = async () => {

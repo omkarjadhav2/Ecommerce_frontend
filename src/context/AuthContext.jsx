@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = import.meta.env.VITE_API_BASE;
   const [authTokens, setAuthTokens] = useState(() => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null);
   const [user, setUser] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);

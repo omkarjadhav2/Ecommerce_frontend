@@ -4,7 +4,7 @@ import { createContext } from "react";
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = import.meta.env.VITE_API_BASE;
 
   const uploadProduct = async (productData) => {
     try {
