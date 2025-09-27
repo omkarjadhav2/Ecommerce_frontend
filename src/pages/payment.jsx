@@ -1,4 +1,3 @@
-// src/pages/Payment.jsx
 import React, { useContext, useState } from "react";
 import Title from "../components/Title";
 import { assets } from "../assets/assets";
@@ -21,7 +20,7 @@ const loadRazorpayScript = () =>
 
 const Payment = () => {
   const [method, setMethod] = useState("cod");
-  const { cartData } = useContext(ShopContext); // not required for payment but available
+  const { cartData } = useContext(ShopContext); 
   const { authTokens, selectedAddress } = useContext(AuthContext);
   const baseURL = "http://127.0.0.1:8000";
 
@@ -32,14 +31,12 @@ const Payment = () => {
     }
 
     if (method === "cod") {
-      // Call your backend order endpoint for cash-on-delivery (if you have one)
-      // or reuse placeOrder in ShopContext. For now you already have placeOrder in context.
+
       alert("COD flow - implement as needed");
       return;
     }
 
     if (method === "razorpay") {
-      // 1) ask backend to create a Razorpay order
       try {
         const createResp = await axios.post(
           `${baseURL}/api/create-razorpay-order/`,
@@ -54,23 +51,23 @@ const Payment = () => {
 
         const { razorpay_order_id, amount, key } = createResp.data;
 
-        // 2) load razorpay JS
+        
         const ok = await loadRazorpayScript();
         if (!ok) {
           alert("Failed to load Razorpay SDK. Check network.");
           return;
         }
 
-        // 3) configure options
+      
         const options = {
-          key, // razorpay key id
-          amount: amount, // in paise
+          key, 
+          amount: amount, 
           currency: "INR",
           name: "Your Shop Name",
           description: "Purchase from shop",
           order_id: razorpay_order_id,
           handler: async function (response) {
-            // response has razorpay_payment_id, razorpay_order_id, razorpay_signature
+            
             try {
               const verifyResp = await axios.post(
                 `${baseURL}/api/verify-razorpay/`,
@@ -88,9 +85,9 @@ const Payment = () => {
                 }
               );
 
-              // success
+              
               alert("Payment successful! Order placed.");
-              // navigate to orders page or reload cart etc
+            
               window.location.href = "/orders";
             } catch (err) {
               console.error(err.response?.data || err);
@@ -116,12 +113,12 @@ const Payment = () => {
  return (
   <div className="mt-8">
     <div className="bg-white shadow-lg rounded-2xl p-6 min-w-80">
-      {/* Section Title */}
+     
       <Title text1="PAYMENT" text2="METHOD" />
 
-      {/* Payment Options */}
+      
       <div className="flex gap-4 flex-col lg:flex-row mt-6">
-        {/* Razorpay Option */}
+        
         <div
           onClick={() => setMethod("razorpay")}
           className={`flex items-center justify-between border rounded-xl px-5 py-4 cursor-pointer transition-all duration-200 ${
@@ -145,7 +142,7 @@ const Payment = () => {
           <span className="text-xs font-medium text-gray-500">Online Payment</span>
         </div>
 
-        {/* Cash on Delivery Option */}
+        
         <div
           onClick={() => setMethod("cod")}
           className={`flex items-center justify-between border rounded-xl px-5 py-4 cursor-pointer transition-all duration-200 ${
@@ -169,12 +166,12 @@ const Payment = () => {
         </div>
       </div>
 
-      {/* Cart Total */}
+      
       <div className="mt-10">
         <CartTotal />
       </div>
 
-      {/* Place Order Button */}
+              
       <div className="w-full text-end mt-10">
         <button
           onClick={handlePlaceOrder}

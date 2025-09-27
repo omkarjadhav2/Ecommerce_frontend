@@ -21,7 +21,7 @@ const Orders = () => {
       <div>
         {orders.map((order, orderIndex) => (
           <div key={orderIndex} className="mb-8">
-            {/* Order level info */}
+            
             <p className="font-semibold mb-2">
               Order #{order.id} — {order.order_status} ({order.payment_status})
             </p>
@@ -31,7 +31,7 @@ const Orders = () => {
               {new Date(order.created_at).toLocaleDateString()}
             </p>
 
-            {/* Items inside this order */}
+            
             {order.items.map((item, itemIndex) => (
               <div
                 key={itemIndex}

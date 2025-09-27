@@ -16,7 +16,7 @@ const Profile = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-6">
-      {/* User Info Card */}
+      
       <div className="bg-white shadow-md rounded-2xl p-6 border  border-amber-700">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-gray-800">
@@ -30,7 +30,7 @@ const Profile = () => {
           </button>
         </div>
 
-        {/* User Basic Info */}
+      
         <div className="space-y-2 text-gray-700">
           <p>
             <span className="font-medium">Email:</span> {user.email}
@@ -50,7 +50,7 @@ const Profile = () => {
         </div>
       </div>
 
-      {/* Addresses */}
+      
       <div className="mt-8 bg-white shadow-md rounded-2xl p-6 border  border-amber-700">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Addresses</h2>
         {user.addresses?.length > 0 ? (

@@ -17,25 +17,10 @@ const Cart = () => {
     removeFromCart,
     cartData
   } = useContext(ShopContext);
-  // const [cartData, setCartData] = useState([]);
+ 
   const { authTokens } = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   const tempData = [];
-  //   for (const items in cartItems) {
-  //     for (const item in cartItems[items]) {
-  //       if (cartItems[items][item] > 0) {
-  //         tempData.push({
-  //           id: items,
-  //           size: item,
-  //           quantity: cartItems[items][item],
-  //         });
-  //       }
-  //     }
-  //   }
-  //   setCartData(tempData);
-  // }, [cartItems]);
-
+  
   useEffect(() => {
    console.log("here",cartData);
    
@@ -48,7 +33,7 @@ const Cart = () => {
       </div>
       <div>
         {cartData.map((item, index) => {
-          const productData = item.product; // directly use the product field
+          const productData = item.product; 
 
           return (
             <div

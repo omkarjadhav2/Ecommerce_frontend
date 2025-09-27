@@ -24,14 +24,14 @@ const CustomerRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ✅ Check password confirmation
+    
     if (form.password !== form.confirm_password) {
       setError("Passwords do not match!");
       return;
     }
 
     try {
-      const { confirm_password, ...payload } = form; // remove confirm_password before sending
+      const { confirm_password, ...payload } = form; 
       const success = await registerUser(payload);
       if (success) {
         alert("Customer registered!");
@@ -54,7 +54,7 @@ const CustomerRegister = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* First & Last Name */}
+           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-600">
@@ -84,7 +84,7 @@ const CustomerRegister = () => {
             </div>
           </div>
 
-          {/* Username */}
+         
           <div>
             <label className="block text-sm font-medium text-gray-600">
               Username
@@ -99,7 +99,7 @@ const CustomerRegister = () => {
             />
           </div>
 
-          {/* Email */}
+         
           <div>
             <label className="block text-sm font-medium text-gray-600">
               Email
@@ -114,7 +114,7 @@ const CustomerRegister = () => {
             />
           </div>
 
-          {/* Contact */}
+         
           <div>
             <label className="block text-sm font-medium text-gray-600">
               Contact
@@ -129,7 +129,7 @@ const CustomerRegister = () => {
             />
           </div>
 
-          {/* Password */}
+          
           <div>
             <label className="block text-sm font-medium text-gray-600">
               Password
@@ -144,7 +144,7 @@ const CustomerRegister = () => {
             />
           </div>
 
-          {/* Confirm Password */}
+          
           <div>
             <label className="block text-sm font-medium text-gray-600">
               Confirm Password
@@ -159,7 +159,7 @@ const CustomerRegister = () => {
             />
           </div>
 
-          {/* Submit */}
+          
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"

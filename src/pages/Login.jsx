@@ -31,7 +31,7 @@ const Login = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Username */}
+          
           <div>
             <label
               htmlFor="username"
@@ -49,7 +49,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
+          
           <div>
             <label
               htmlFor="password"
@@ -67,7 +67,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Submit */}
+        
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
@@ -76,7 +76,7 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Extra Links */}
+        
         <p className="text-center text-sm text-gray-500 mt-6">
           Don’t have an account?{" "}
           <a href="/register" className="text-blue-600 hover:underline">

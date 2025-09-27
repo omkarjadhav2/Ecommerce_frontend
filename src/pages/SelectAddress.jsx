@@ -19,7 +19,7 @@ const SelectAddress = () => {
   }, []);
 
   useEffect(() => {
-    // persist selection so it survives a page refresh
+    
     if (selectedAddress) {
       localStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
       console.log(selectedAddress);
@@ -32,7 +32,7 @@ const SelectAddress = () => {
   };
   const handleProceed = () => {
     if (!selectedAddress) return;
-    // navigate to payment page (change route if needed)
+    
     navigate("/payment");
   };
 
@@ -52,7 +52,7 @@ const SelectAddress = () => {
 
   return (
     <div className="flex flex-col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t">
-      {/* RIGHT: Select Address + Proceed */}
+    
       <div className="mt-8 min-w-80 w-full sm:w-[420px]">
         <div className="w-full">
           <div className="text-2xl">
@@ -97,7 +97,7 @@ const SelectAddress = () => {
                 ))}
               </ul>
 
-              {/* Proceed button (disabled unless an address selected) */}
+    
               <div className="mt-6 flex justify-between">
                 <button
                   className="text-green-600 border-1 p-1"
@@ -132,7 +132,6 @@ const SelectAddress = () => {
         </div>
       </div>
       
-      {/* LEFT: Add / Edit Address Form (kept as-is) */}
       {showFields ? (
         <form
         onSubmit={handleFormSubmission}
@@ -211,7 +210,7 @@ const SelectAddress = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          
           <button
             type="submit"
             className="mt-4 px-6 py-2 rounded bg-black text-white font-medium hover:opacity-90"

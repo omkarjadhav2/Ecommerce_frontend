@@ -49,9 +49,9 @@ const ShopContextProvider = (props) => {
       const response = await axios.post(
         `${baseURL}/api/cart/`,
         {
-          product_id: itemId, // must match serializer
+          product_id: itemId, 
           size: size,
-          quantity: 1, // add quantity too
+          quantity: 1, 
         },
         {
           headers: {
@@ -82,7 +82,7 @@ const ShopContextProvider = (props) => {
         },
       });
 
-      // ✅ response.data is an object (cart), so take items
+      
       const items = response.data.items || [];
 
       setCartCount(items.length);
@@ -197,10 +197,10 @@ const ShopContextProvider = (props) => {
       },
     });
 
-    // response.data is an array of orders
+    
     const orders = response.data;
 
-    // flatten all items from all orders
+  
     const items = orders.flatMap(order => order.items);
 
     setOrders(orders);

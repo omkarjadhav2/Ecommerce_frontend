@@ -12,18 +12,17 @@ const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) =>
     setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
-  // ✅ Auto slide every 3 seconds
+  
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 3000); // 3000ms = 3 seconds
+    }, 3000); 
 
-    return () => clearInterval(interval); // cleanup
-  }, [current]); // dependency ensures it updates correctly
+    return () => clearInterval(interval); 
+  }, [current]); 
 
   return (
     <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-lg mb-6">
-      {/* Images */}
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
         style={{ transform: `translateX(-${current * 100}%)` }}
@@ -38,7 +37,7 @@ const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) =>
         ))}
       </div>
 
-      {/* Prev Button */}
+     
       <button
         onClick={prevSlide}
         className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black transition"
@@ -46,15 +45,13 @@ const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) =>
         ❮
       </button>
 
-      {/* Next Button */}
+      
       <button
         onClick={nextSlide}
         className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black transition"
       >
         ❯
       </button>
-
-      {/* Indicators */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
         {images.map((_, index) => (
           <button
