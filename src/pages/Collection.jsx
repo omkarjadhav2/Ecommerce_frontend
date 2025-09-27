@@ -168,12 +168,14 @@ const Collection = () => {
             onChange={(e) => setSortType(e.target.value)}
             className="border border-gray-300 text-sm px-2"
           >
-            <option value="relavent">sort by: Relavant</option>
+            <option value="relavent">sort by: Relavant</option> 
             <option value="low-high">sort by: Low to High</option>
             <option value="high-low">sort by: High to Low</option>
           </select>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+
+          
           {filterProducts.map((item, index) => (
             <ProductItem
               key={item.id}

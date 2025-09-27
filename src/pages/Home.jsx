@@ -4,10 +4,12 @@ import LatestCollection from '../components/LatestCollection'
 import BestSeller from '../components/BestSeller'
 import OurPolicy from '../components/OurPolicy'
 import NewsLetterbox from '../components/NewsLetterbox'
+import Carousel from '../components/Carousel'
 
 const home = () => {
   return (
     <div>
+      <Carousel></Carousel>
       <Hero></Hero>
       <LatestCollection></LatestCollection>
       <BestSeller></BestSeller>

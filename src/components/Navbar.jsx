@@ -6,17 +6,17 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const { setShowSearch, getCartItems ,cartCount} = useContext(ShopContext);
-  const { logoutUser, user , authTokens } = useContext(AuthContext);
+  const { setShowSearch, getCartItems, cartCount } = useContext(ShopContext);
+  const { logoutUser, user, authTokens } = useContext(AuthContext);
 
-useEffect(()=>{
-  getCartItems(authTokens)
-},[cartCount])
+  useEffect(() => {
+    getCartItems(authTokens);
+  }, [cartCount]);
 
   return (
-    <div className="flex item-center justify-between py-5 font-medium ">
+    <div className="flex item-center justify-between  font-medium mt-1 ">
       <Link to="/">
-        <img src={assets.logo} alt="logo" className="w-30" />
+        <img src={assets.logo1} alt="logo" className="w-30 sm:w-60" />
       </Link>
       <ul className="hidden sm:flex gap-5 text-sm text-gray-700 my-4">
         <NavLink to="/" className="flex flex-col items-center gap-1">
@@ -41,23 +41,20 @@ useEffect(()=>{
           <p>Hello, {user.username}</p>
         </div>
       ) : (
-        <div className="hidden sm:flex gap-5 text-sm text-gray-700  items-top my-5">
+        <div className="hidden sm:flex gap-5 text-sm text-gray-700  items-top mt-1">
           <NavLink to="/login" className="flex flex-col items-center gap-1">
             <button
-              className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md 
-               hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out"
+              className="px-4 py-2 border border-amber-700 rounded-md 
+               hover:bg-black hover:text-white transition-all duration-300 ease-in-out"
             >
               Login
             </button>
             <hr className="w-2/4 border-none h-[1.5px] bg-gray-700 hidden" />
           </NavLink>
-          <NavLink
-            to="/register/customer"
-            className="flex flex-col items-center gap-1"
-          >
+          <NavLink to="/register" className="flex flex-col items-center gap-1">
             <button
-              className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md 
-               hover:bg-blue-500 hover:text-white transition-all duration-300 ease-in-out"
+              className="px-4 py-2 border border-amber-700  rounded-md 
+               hover:bg-black hover:text-white transition-all duration-300 ease-in-out"
             >
               Register
             </button>
@@ -73,7 +70,7 @@ useEffect(()=>{
           className="w-5 cursor-pointer"
         />
         <div className="group relative">
-          <Link >
+          <Link>
             <img
               className="w-5 cursor-pointer"
               src={assets.profile_icon}
@@ -81,11 +78,20 @@ useEffect(()=>{
             />
           </Link>
 
-          <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
-            <div className="flex flex-col gap-2 w-36 px-5 bg-slate-100 text-gray-500 rounded">
-              <Link to={"/profile"}><p className="cursor-pointer hover:text-black">My Profile</p></Link>
-              <Link to={"/orders"}><p className="cursor-pointer hover:text-black">Orders</p></Link>
-            <p onClick={logoutUser} className="cursor-pointer hover:text-black">LogOut</p>
+          <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50">
+            <div className="flex flex-col gap-2 w-36 px-5 bg-slate-100 text-gray-500 rounded shadow-lg">
+              <Link to={"/profile"}>
+                <p className="cursor-pointer hover:text-black">My Profile</p>
+              </Link>
+              <Link to={"/orders"}>
+                <p className="cursor-pointer hover:text-black">Orders</p>
+              </Link>
+              <p
+                onClick={logoutUser}
+                className="cursor-pointer hover:text-black"
+              >
+                LogOut
+              </p>
             </div>
           </div>
         </div>

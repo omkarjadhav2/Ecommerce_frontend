@@ -37,6 +37,13 @@ const ShopContextProvider = (props) => {
       toast.error("Please select size");
       return;
     }
+    if(!authTokens){
+      toast.error("please login")
+      setTimeout(() => {
+        navigate("/login");
+      }, 1000);
+      return;
+    }
 
     try {
       const response = await axios.post(

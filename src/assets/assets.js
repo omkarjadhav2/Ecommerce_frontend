@@ -16,6 +16,11 @@ import contact_img from "./contact_img.png";
 import razorpay_logo from "./razorpay_logo.png";
 import stripe_logo from "./stripe_logo.png";
 import cross_icon from "./cross_icon.png";
+import offer1 from "./offer1.png"
+import offer2 from "./offer2.png"
+import offer3 from "./offer3.png"
+import logo1 from "./logo1.png"
+import about_us from "./about_us.png"
 
 export const assets = {
   logo,
@@ -36,6 +41,11 @@ export const assets = {
   razorpay_logo,
   stripe_logo,
   cross_icon,
+  offer1,
+  offer2,
+  offer3,
+  logo1,
+  about_us,
 };
 
 export const products = [

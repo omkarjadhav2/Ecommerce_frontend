@@ -11,12 +11,14 @@ const About = () => {
 
       </div>
       <div className='my-10 flex flex-col md:flex-row gap-16'>
-        <img className='w-full md:max-w-[450px]' src={assets.about_img} alt="" />
+        <img className='w-full md:max-w-[450px]' src={assets.about_us} alt="" />
         <div className='flex flex-col justify-center gap-6 md:w-2/4 text-gray-600'>
-        <p>These are best products in the world dont miss the opportunity These are best products in the world dont miss the opportunity These are best products in the world dont miss the opportunity</p>
-        <p>These are best products in the world dont miss the opportunity These are best products in the world dont miss the opportunity</p>
+        <p>Welcome to Sole Store, where timeless design meets modern comfort. We're passionate about creating high-quality, durable footwear that helps you look and feel your best. Our collection is a 
+          reflection of our commitment to style, quality, and a love for the perfect pair of shoes.</p>
+        <p>More than just a store, Sole Store is a community for those who value style, comfort, and adventure. 
+          We're inspired by the journey—whether it's a walk in the park or a trip across the globe.</p>
         <b className='text-gray-600'>Our Mission</b>
-        <p>These are best products in the world dont miss the opportunity</p>
+        <p>Our mission is to craft exceptional footwear that blends timeless style with unmatched comfort and durability.</p>
         </div>
 
       </div>

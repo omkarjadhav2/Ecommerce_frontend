@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useContext(AuthContext);
@@ -16,7 +17,7 @@ const Profile = () => {
   return (
     <div className="max-w-3xl mx-auto p-6">
       {/* User Info Card */}
-      <div className="bg-white shadow-md rounded-2xl p-6 border">
+      <div className="bg-white shadow-md rounded-2xl p-6 border  border-amber-700">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-gray-800">
             Hello, {user.username}
@@ -50,7 +51,7 @@ const Profile = () => {
       </div>
 
       {/* Addresses */}
-      <div className="mt-8 bg-white shadow-md rounded-2xl p-6 border">
+      <div className="mt-8 bg-white shadow-md rounded-2xl p-6 border  border-amber-700">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">Addresses</h2>
         {user.addresses?.length > 0 ? (
           <ul className="space-y-4">
@@ -80,6 +81,11 @@ const Profile = () => {
           <p className="text-gray-500">No addresses added yet.</p>
         )}
       </div>
+      <Link to={"/orders"}>
+       <div className="bg-white shadow-md rounded-2xl p-6 border border-amber-700 mt-8 mb-8 cursor-pointer ">
+        <p>Orders</p>
+       </div> 
+       </Link>
     </div>
   );
 };
