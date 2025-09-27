@@ -21,7 +21,6 @@ import ImageUpload from "./pages/upload";
 import { ProductProvider } from "./context/ProductContext";
 import Profile from "./pages/profile";
 import Payment from "./pages/payment";
-import Testcart from "./pages/testcart";
 
 const App = () => {
   return (
@@ -54,7 +53,6 @@ const App = () => {
             <Route path="/address" element={<SelectAddress />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/payment" element={<Payment />} />
-            <Route path="/test" element={<Testcart />} />
           </Routes>
           <Footer></Footer>
         </div>
