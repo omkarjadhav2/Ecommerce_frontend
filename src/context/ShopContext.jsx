@@ -21,7 +21,7 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/products/");
+        const res = await fetch(`${baseURL}/api/products/`);
         if (!res.ok) throw new Error("Failed to fetch products");
         const data = await res.json();
         setProducts(data);
