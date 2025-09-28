@@ -42,7 +42,7 @@ const SelectAddress = () => {
     const success = await saveAddress(form, authTokens);
     if (success) {
       alert("Address Saved!");
-      navigate("/");
+      navigate("/address");
     }
   } catch (err) {
     console.error(err);
