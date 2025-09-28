@@ -6,9 +6,7 @@ const Profile = () => {
   const { user } = useContext(AuthContext);
   const [editing, setEditing] = useState(false);
 
-  useEffect(() => {
-    console.log("my user", user);
-  }, [user]);
+
 
   if (!user) {
     return <h1 className="text-center mt-10 text-xl">Hello unknown user</h1>;

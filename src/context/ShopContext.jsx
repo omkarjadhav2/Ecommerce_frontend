@@ -88,9 +88,6 @@ const ShopContextProvider = (props) => {
       setCartCount(items.length);
       setCartData(items);
 
-      console.log("get wala", response.data);
-      console.log("get items", items);
-
       return items;
     } catch (error) {
       console.error(error.response?.data);
@@ -205,8 +202,7 @@ const ShopContextProvider = (props) => {
 
     setOrders(orders);
 
-    console.log("all orders", orders);
-    console.log("all items", items);
+    
 
     return items;
   } catch (error) {

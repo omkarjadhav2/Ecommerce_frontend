@@ -21,10 +21,7 @@ const Cart = () => {
   const { authTokens } = useContext(AuthContext);
 
   
-  useEffect(() => {
-   console.log("here",cartData);
-   
-  }, []);
+  
 
   return (
     <div className="border-t pt-14">
