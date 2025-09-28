@@ -22,7 +22,7 @@ const Payment = () => {
   const [method, setMethod] = useState("cod");
   const { cartData } = useContext(ShopContext); 
   const { authTokens, selectedAddress } = useContext(AuthContext);
-  const baseURL = "http://127.0.0.1:8000";
+  const baseURL = "https://django-drf-ecommerce.onrender.com";
 
   const handlePlaceOrder = async () => {
     if (!selectedAddress) {
