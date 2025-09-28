@@ -38,6 +38,7 @@ const Navbar = () => {
       {user ? (
         <div className="hidden sm:flex gap-5 text-lg text-gray-700 items-top my-5">
           <p>Hello, {user.username}</p>
+          {!user.is_customer ? <Link to={"/upload"}><p>Add Products</p></Link> : <div></div> }
         </div>
       ) : (
         <div className="hidden sm:flex gap-5 text-sm text-gray-700 items-top mt-1">
