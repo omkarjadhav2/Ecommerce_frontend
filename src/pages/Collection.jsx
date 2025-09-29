@@ -168,27 +168,34 @@ const Collection = () => {
             onChange={(e) => setSortType(e.target.value)}
             className="border border-gray-300 text-sm px-2"
           >
-            <option value="relavent">sort by: Relavant</option> 
+            <option value="relavent">sort by: Relavant</option>
             <option value="low-high">sort by: Low to High</option>
             <option value="high-low">sort by: High to Low</option>
           </select>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
-
           
-          {filterProducts.map((item, index) => (
-            <ProductItem
-              key={item.id}
-              image={
-                item.images && item.images.length > 0
-                  ? item.images[0].url
-                  : null
-              }
-              price={item.newprice}
-              name={item.name}
-              id={item.id}
-            ></ProductItem>
-          ))}
+          
+          {products.length === 0 ? (
+            <p className="col-span-full text-center text-2xl">Loading Products...</p>
+          ) : filterProducts.length > 0 ? (
+            filterProducts.map((item, index) => (
+              <ProductItem
+                key={item.id}
+                image={
+                  item.images && item.images.length > 0
+                    ? item.images[0].url
+                    : null
+                }
+                price={item.newprice}
+                name={item.name}
+                id={item.id}
+              ></ProductItem>
+            ))
+          ) : (
+            <p className="col-span-full text-center">No products found.</p>
+          )}
+
         </div>
       </div>
     </div>

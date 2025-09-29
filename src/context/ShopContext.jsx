@@ -19,18 +19,17 @@ const ShopContextProvider = (props) => {
   const baseURL = import.meta.env.VITE_API_BASE;
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await fetch(`${baseURL}/api/products/`);
-        if (!res.ok) throw new Error("Failed to fetch products");
-        const data = await res.json();
-        setProducts(data);
-      } catch (err) {
-        console.error("Error fetching products:", err);
-      }
-    };
-    fetchProducts();
-  }, []);
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`${baseURL}/api/products/`);
+      setProducts(res.data);
+    } catch (err) {
+      console.error("Error fetching products:", err);
+    }
+  };
+  fetchProducts();
+}, [baseURL]);
+
 
   const addToCart = async (itemId, size, authTokens) => {
     if (!size) {

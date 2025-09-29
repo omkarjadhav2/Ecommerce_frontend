@@ -1,34 +1,49 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { ShopContext } from '../context/ShopContext'
-import Title from './Title'
-import ProductItem from './ProductItem'
+import React, { useContext, useEffect, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import Title from "./Title";
+import ProductItem from "./ProductItem";
 
 const BestSeller = () => {
-    const {products} = useContext(ShopContext) 
-    const [bestSeller , setBestSeller] = useState([])
+  const { products } = useContext(ShopContext);
+  const [bestSeller, setBestSeller] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const bestProducts = products.filter((item) => item.bestseller);
-        setBestSeller(bestProducts.slice(0, 5));
-     }, [products])
+  useEffect(() => {
+    if (products && products.length > 0) {
+      const bestProducts = products.filter((item) => item.bestseller);
+      setBestSeller(bestProducts.slice(0, 5));
+      setLoading(false);
+    }
+  }, [products]);
+
   return (
-    <div className='my-10'>
-        <div className='text-center text-3xl py-8'>
-            <Title text1={'BEST'} text2={'SELLERS'}/>
-            <p className='w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600'>
-            these are bestseller product that You wont find anywhere
+    <div className="my-10">
+      <div className="text-center text-3xl py-8">
+        <Title text1={"BEST"} text2={"SELLERS"} />
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
+          These are bestseller products that you won’t find anywhere
+        </p>
+      </div>
 
-            </p>
-
-        </div>
+      {loading ? (
+        <p className="text-center text-gray-500 text-2xl">Loading products...</p>
+      ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
-            {
-                bestSeller.map((item ,index) => <ProductItem key={item.id}   image={item.images && item.images.length > 0 ? item.images[0].url : null} price={item.newprice} name={item.name} id={item.id}></ProductItem>)
-            }
+          {bestSeller.map((item) => (
+            <ProductItem
+              key={item.id}
+              image={
+                item.images && item.images.length > 0 ? item.images[0].url : null
+              }
+              price={item.newprice}
+              name={item.name}
+              id={item.id}
+            />
+          ))}
         </div>
-        
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default BestSeller
+export default BestSeller;

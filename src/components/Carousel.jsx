@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { assets } from "../assets/assets";
+import { Link } from "react-router-dom";
 
 const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) => {
   const [current, setCurrent] = useState(0);
@@ -23,6 +24,7 @@ const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) =>
 
   return (
     <div className="relative w-full h-[250px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-lg mb-6">
+      <Link to={"/collection"}>
       <div
         className="flex transition-transform duration-700 ease-in-out h-full"
         style={{ transform: `translateX(-${current * 100}%)` }}
@@ -63,6 +65,7 @@ const Carousel = ({ images = [assets.offer1, assets.offer2, assets.offer3] }) =>
           />
         ))}
       </div>
+      </Link>
     </div>
   );
 };
